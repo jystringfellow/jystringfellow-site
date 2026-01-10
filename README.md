@@ -24,7 +24,7 @@ A modern, responsive personal website built with Next.js 14, TypeScript, and Mat
 ### Prerequisites
 
 - Node.js 18.x or higher
-- npm or yarn
+- pnpm or yarn
 
 ### Installation
 
@@ -38,24 +38,24 @@ cd jystringfellow-site
 2. Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 3. Run the development server:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm run lint` - Run ESLint
+- `pnpm run format` - Format code with Prettier
 
 ## Deployment to Cloudflare Pages
 
@@ -69,7 +69,7 @@ This site is configured for static export and can be easily deployed to Cloudfla
 4. Select your repository
 5. Configure build settings:
    - **Framework preset**: Next.js
-   - **Build command**: `npm run build`
+   - **Build command**: `pnpm run build`
    - **Build output directory**: `out`
 6. Click **Save and Deploy**
 
@@ -78,7 +78,7 @@ This site is configured for static export and can be easily deployed to Cloudfla
 1. Install Wrangler:
 
 ```bash
-npm install -g wrangler
+pnpm install -g wrangler
 ```
 
 2. Log in to Cloudflare:
@@ -90,7 +90,7 @@ wrangler login
 3. Build the site:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 4. Deploy:
