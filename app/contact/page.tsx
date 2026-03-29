@@ -15,6 +15,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import IconButton from '@mui/material/IconButton';
 
+const EMAIL = 'contact@jystringfellow.com';
+const GITHUB_URL = 'https://github.com/jystringfellow';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/jacob-y-stringfellow/';
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -137,34 +141,63 @@ export default function Contact() {
               </Typography>
               <Box sx={{ mt: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <IconButton color="primary" aria-label="email">
+                  <IconButton
+                    color="primary"
+                    aria-label="email"
+                    href={`mailto:${EMAIL}`}
+                  >
                     <EmailIcon />
                   </IconButton>
-                  <Typography variant="body1">contact@jystringfellow.com</Typography>
+                  <Typography
+                    variant="body1"
+                    component="a"
+                    href={`mailto:${EMAIL}`}
+                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    {EMAIL}
+                  </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <IconButton
                     color="primary"
                     aria-label="github"
-                    href="https://github.com/jystringfellow"
+                    href={GITHUB_URL}
                     target="_blank"
                     rel="noopener"
                   >
                     <GitHubIcon />
                   </IconButton>
-                  <Typography variant="body1">GitHub</Typography>
+                  <Typography
+                    variant="body1"
+                    component="a"
+                    href={GITHUB_URL}
+                    target="_blank"
+                    rel="noopener"
+                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    GitHub
+                  </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <IconButton
                     color="primary"
                     aria-label="linkedin"
-                    href="https://www.linkedin.com/in/jacob-y-stringfellow/"
+                    href={LINKEDIN_URL}
                     target="_blank"
                     rel="noopener"
                   >
                     <LinkedInIcon />
                   </IconButton>
-                  <Typography variant="body1">LinkedIn</Typography>
+                  <Typography
+                    variant="body1"
+                    component="a"
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener"
+                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    LinkedIn
+                  </Typography>
                 </Box>
               </Box>
             </CardContent>
