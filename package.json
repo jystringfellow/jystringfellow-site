@@ -34,11 +34,11 @@
     "typescript": "^5.9.3"
   },
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "pnpm": {
     "executionEnv": {
-      "nodeVersion": "22.14.0"
+      "nodeVersion": "24.14.1"
     }
   }
 }
