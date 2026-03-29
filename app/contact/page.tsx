@@ -140,7 +140,7 @@ export default function Contact() {
                   <IconButton color="primary" aria-label="email">
                     <EmailIcon />
                   </IconButton>
-                  <Typography variant="body1">jacob@example.com</Typography>
+                  <Typography variant="body1">contact@jystringfellow.com</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <IconButton
@@ -155,7 +155,13 @@ export default function Contact() {
                   <Typography variant="body1">GitHub</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <IconButton color="primary" aria-label="linkedin">
+                  <IconButton
+                    color="primary"
+                    aria-label="linkedin"
+                    href="https://www.linkedin.com/in/jacob-y-stringfellow/"
+                    target="_blank"
+                    rel="noopener"
+                  >
                     <LinkedInIcon />
                   </IconButton>
                   <Typography variant="body1">LinkedIn</Typography>
