@@ -10,21 +10,21 @@ A modern, responsive personal website built with Next.js 14, TypeScript, and Mat
 - 📱 Fully responsive design
 - 🎯 TypeScript for type safety
 - ✨ ESLint and Prettier for code quality
-- 🚀 Optimized for Cloudflare Pages deployment
+- 🚀 Deployed on Vercel with automatic deploys on push to `main`
 
 ## Pages
 
 - **Home**: Landing page with quick navigation cards
 - **About**: Information about background and skills
 - **Projects**: Portfolio showcase with project cards
-- **Contact**: Contact form with validation (API route included)
+- **Contact**: Contact form powered by Resend
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18.x or higher
-- pnpm or yarn
+- pnpm
 
 ### Installation
 
@@ -41,71 +41,39 @@ cd jystringfellow-site
 pnpm install
 ```
 
-3. Run the development server:
+3. Create a `.env.local` file in the project root:
 
-```bash
-pnpm run dev
+```
+RESEND_API_KEY=your_resend_api_key
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Run the development server:
+
+```bash
+pnpm dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Available Scripts
 
-- `pnpm run dev` - Start development server
-- `pnpm run build` - Build for production
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
 - `pnpm start` - Start production server
-- `pnpm run lint` - Run ESLint
-- `pnpm run format` - Format code with Prettier
+- `pnpm lint` - Run ESLint
+- `pnpm format` - Format code with Prettier
 
-## Deployment to Cloudflare Pages
+## Deployment
 
-This site is configured for static export and can be easily deployed to Cloudflare Pages.
-
-### Option 1: Deploy via Cloudflare Dashboard
-
-1. Push your code to GitHub
-2. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com/)
-3. Go to **Pages** → **Create a project** → **Connect to Git**
-4. Select your repository
-5. Configure build settings:
-   - **Framework preset**: Next.js
-   - **Build command**: `pnpm run build`
-   - **Build output directory**: `out`
-6. Click **Save and Deploy**
-
-### Option 2: Deploy via Wrangler CLI
-
-1. Install Wrangler:
-
-```bash
-pnpm install -g wrangler
-```
-
-2. Log in to Cloudflare:
-
-```bash
-wrangler login
-```
-
-3. Build the site:
-
-```bash
-pnpm run build
-```
-
-4. Deploy:
-
-```bash
-wrangler pages deploy out
-```
+This site is deployed on [Vercel](https://vercel.com). Every push to `main` triggers an automatic deployment.
 
 ### Environment Variables
 
-If you need environment variables for production:
+Add the following environment variable in your Vercel project settings:
 
-1. Go to your Cloudflare Pages project settings
-2. Navigate to **Settings** → **Environment variables**
-3. Add your variables for production and preview environments
+| Variable | Description |
+|---|---|
+| `RESEND_API_KEY` | API key from [resend.com](https://resend.com) for contact form emails |
 
 ## Project Structure
 
@@ -129,7 +97,6 @@ If you need environment variables for production:
 │   └── ThemeProvider.tsx
 ├── next.config.js
 ├── tsconfig.json
-├── eslint.config.mjs
 └── package.json
 ```
 
@@ -163,6 +130,7 @@ export const lightTheme = createTheme({
 - **UI Library**: Material UI v5
 - **Styling**: Emotion (CSS-in-JS)
 - **Icons**: Material UI Icons
+- **Email**: Resend
 - **Linting**: ESLint
 - **Formatting**: Prettier
 
@@ -172,4 +140,4 @@ See [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-Jacob Stringfellow - [GitHub](https://github.com/jystringfellow)
+Jacob Stringfellow - [GitHub](https://github.com/jystringfellow) · [LinkedIn](https://www.linkedin.com/in/jacob-y-stringfellow/) · [contact@jystringfellow.com](mailto:contact@jystringfellow.com)
