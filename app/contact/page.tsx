@@ -137,10 +137,21 @@ export default function Contact() {
               </Typography>
               <Box sx={{ mt: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <IconButton color="primary" aria-label="email">
+                  <IconButton
+                    color="primary"
+                    aria-label="email"
+                    href="mailto:contact@jystringfellow.com"
+                  >
                     <EmailIcon />
                   </IconButton>
-                  <Typography variant="body1">contact@jystringfellow.com</Typography>
+                  <Typography
+                    variant="body1"
+                    component="a"
+                    href="mailto:contact@jystringfellow.com"
+                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    contact@jystringfellow.com
+                  </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <IconButton
@@ -152,7 +163,16 @@ export default function Contact() {
                   >
                     <GitHubIcon />
                   </IconButton>
-                  <Typography variant="body1">GitHub</Typography>
+                  <Typography
+                    variant="body1"
+                    component="a"
+                    href="https://github.com/jystringfellow"
+                    target="_blank"
+                    rel="noopener"
+                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    GitHub
+                  </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <IconButton
@@ -164,7 +184,16 @@ export default function Contact() {
                   >
                     <LinkedInIcon />
                   </IconButton>
-                  <Typography variant="body1">LinkedIn</Typography>
+                  <Typography
+                    variant="body1"
+                    component="a"
+                    href="https://www.linkedin.com/in/jacob-y-stringfellow/"
+                    target="_blank"
+                    rel="noopener"
+                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                  >
+                    LinkedIn
+                  </Typography>
                 </Box>
               </Box>
             </CardContent>
