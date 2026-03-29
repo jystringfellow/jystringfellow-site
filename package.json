@@ -38,7 +38,8 @@
   },
   "pnpm": {
     "executionEnv": {
-      "nodeVersion": "22.x"
+      "nodeVersion": "22.14.0"
     }
   }
+}
 }
