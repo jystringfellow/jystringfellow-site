@@ -15,6 +15,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import IconButton from '@mui/material/IconButton';
 
+const EMAIL = 'contact@jystringfellow.com';
+const GITHUB_URL = 'https://github.com/jystringfellow';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/jacob-y-stringfellow/';
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -140,24 +144,24 @@ export default function Contact() {
                   <IconButton
                     color="primary"
                     aria-label="email"
-                    href="mailto:contact@jystringfellow.com"
+                    href={`mailto:${EMAIL}`}
                   >
                     <EmailIcon />
                   </IconButton>
                   <Typography
                     variant="body1"
                     component="a"
-                    href="mailto:contact@jystringfellow.com"
+                    href={`mailto:${EMAIL}`}
                     sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
                   >
-                    contact@jystringfellow.com
+                    {EMAIL}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <IconButton
                     color="primary"
                     aria-label="github"
-                    href="https://github.com/jystringfellow"
+                    href={GITHUB_URL}
                     target="_blank"
                     rel="noopener"
                   >
@@ -166,7 +170,7 @@ export default function Contact() {
                   <Typography
                     variant="body1"
                     component="a"
-                    href="https://github.com/jystringfellow"
+                    href={GITHUB_URL}
                     target="_blank"
                     rel="noopener"
                     sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
@@ -178,7 +182,7 @@ export default function Contact() {
                   <IconButton
                     color="primary"
                     aria-label="linkedin"
-                    href="https://www.linkedin.com/in/jacob-y-stringfellow/"
+                    href={LINKEDIN_URL}
                     target="_blank"
                     rel="noopener"
                   >
@@ -187,7 +191,7 @@ export default function Contact() {
                   <Typography
                     variant="body1"
                     component="a"
-                    href="https://www.linkedin.com/in/jacob-y-stringfellow/"
+                    href={LINKEDIN_URL}
                     target="_blank"
                     rel="noopener"
                     sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
