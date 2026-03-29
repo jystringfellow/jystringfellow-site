@@ -33,9 +33,12 @@
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "pnpm": {
     "executionEnv": {
-      "nodeVersion": "25.2.1"
+      "nodeVersion": "22.x"
     }
   }
 }
