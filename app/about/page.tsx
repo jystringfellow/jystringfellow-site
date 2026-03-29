@@ -7,9 +7,26 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Chip from '@mui/material/Chip';
 import CodeIcon from '@mui/icons-material/Code';
 import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
+
+const skills = [
+  'TypeScript',
+  'React',
+  'Next.js',
+  'GraphQL',
+  'Node.js',
+  'AWS',
+  'Docker',
+  'Kubernetes',
+  'CI/CD',
+  'AI / LLM Tooling',
+  'Micro-frontends',
+  'GitHub Copilot',
+  'Cursor',
+];
 
 export default function About() {
   return (
@@ -19,8 +36,8 @@ export default function About() {
           About Me
         </Typography>
         <Typography variant="h6" color="text.secondary" paragraph>
-          I&apos;m a passionate software developer dedicated to creating
-          innovative solutions and learning new technologies.
+          Software Engineering Leader based in San Luis Obispo, CA. My passions
+          are software development and music.
         </Typography>
       </Box>
 
@@ -32,10 +49,19 @@ export default function About() {
               <Typography gutterBottom variant="h5" component="h2">
                 Technical Skills
               </Typography>
-              <Typography>
-                Experienced in modern web development technologies including
-                React, Next.js, TypeScript, Node.js, and cloud platforms.
-              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 1,
+                  justifyContent: 'center',
+                  mt: 1,
+                }}
+              >
+                {skills.map((skill) => (
+                  <Chip key={skill} label={skill} size="small" variant="outlined" />
+                ))}
+              </Box>
             </CardContent>
           </Card>
         </Grid>
@@ -47,9 +73,19 @@ export default function About() {
               <Typography gutterBottom variant="h5" component="h2">
                 Education
               </Typography>
-              <Typography>
-                Continuously learning and staying up-to-date with the latest
-                trends in software development and technology.
+              <Typography variant="subtitle1" fontWeight="bold">
+                Cal Poly San Luis Obispo
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                BA, Liberal Arts &amp; Engineering Studies
+                <br />
+                Audio Engineering Minor &middot; 2008–2012
+              </Typography>
+              <Typography variant="subtitle1" fontWeight="bold" sx={{ mt: 2 }}>
+                Cuesta College
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                AA, Audio Technology &middot; 2010–2013
               </Typography>
             </CardContent>
           </Card>
@@ -62,9 +98,19 @@ export default function About() {
               <Typography gutterBottom variant="h5" component="h2">
                 Experience
               </Typography>
-              <Typography>
-                Building scalable applications and collaborating with teams to
-                deliver high-quality software solutions.
+              <Typography variant="subtitle1" fontWeight="bold">
+                Playlist
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Software Engineering Manager &middot; 2024–Present
+              </Typography>
+              <Typography variant="subtitle1" fontWeight="bold" sx={{ mt: 2 }}>
+                Mindbody
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Software Engineer → Engineering Manager
+                <br />
+                2013–2025 &middot; 12 years
               </Typography>
             </CardContent>
           </Card>
@@ -78,15 +124,29 @@ export default function About() {
               My Journey
             </Typography>
             <Typography paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+              I&apos;ve spent over a decade building software and leading
+              engineering teams, with most of that time at Mindbody where I grew
+              from a Software Test Technician all the way to Staff Software
+              Engineer and Engineering Manager. Along the way I worked across
+              the full product stack — from automated test infrastructure and
+              monolith migrations to micro-frontend architectures, cloud-native
+              deployments on AWS with Docker and Kubernetes, and GraphQL
+              platform work.
             </Typography>
             <Typography paragraph>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
+              Today I lead the Developer Experience squad at Playlist, where my
+              focus is removing friction for 400+ engineers: building AI-powered
+              internal tooling, standardizing GraphQL APIs, rolling out tools
+              like Cursor and GitHub Copilot, and managing strategic vendor
+              partnerships. I&apos;m passionate about creating the conditions
+              where great engineers can do their best work.
+            </Typography>
+            <Typography>
+              Outside of software I&apos;m deeply into music — I studied Audio
+              Engineering at Cal Poly SLO and have published research on
+              producing an a cappella CD and pitch detection. That intersection
+              of technical craft and creativity is something I carry into
+              everything I build.
             </Typography>
           </CardContent>
         </Card>
