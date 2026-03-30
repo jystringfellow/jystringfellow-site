@@ -24,6 +24,7 @@ export default function Contact() {
     name: '',
     email: '',
     message: '',
+    website: '',
   });
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
@@ -51,7 +52,7 @@ export default function Contact() {
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '', website: '' });
       } else {
         setSubmitStatus('error');
       }
@@ -109,6 +110,21 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   margin="normal"
+                />
+                <TextField
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  autoComplete="off"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  sx={{
+                    position: 'absolute',
+                    left: '-10000px',
+                    width: 1,
+                    height: 1,
+                    overflow: 'hidden',
+                  }}
                 />
                 {submitStatus === 'success' && (
                   <Alert severity="success" sx={{ mt: 2 }}>
