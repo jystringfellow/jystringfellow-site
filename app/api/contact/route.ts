@@ -40,7 +40,28 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, message, website } = body;
+    const { name, email, message, website, turnstileToken } = body;
+
+    // Verify Turnstile token
+    const turnstileResponse = await fetch(
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          secret: process.env.TURNSTILE_SECRET_KEY,
+          response: turnstileToken,
+          remoteip: getClientIp(request),
+        }),
+      }
+    );
+    const turnstileData = await turnstileResponse.json();
+    if (!turnstileData.success) {
+      return NextResponse.json(
+        { error: 'Bot verification failed' },
+        { status: 400 }
+      );
+    }
 
     // Honeypot field: if bots fill this hidden input, ignore the submission.
     if (typeof website === 'string' && website.trim() !== '') {
