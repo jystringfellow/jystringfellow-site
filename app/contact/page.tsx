@@ -14,6 +14,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import IconButton from '@mui/material/IconButton';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 const EMAIL = 'contact@jystringfellow.com';
 const GITHUB_URL = 'https://github.com/jystringfellow';
@@ -29,6 +30,7 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<
     'idle' | 'success' | 'error'
   >('idle');
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,7 +49,7 @@ export default function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken }),
       });
 
       if (response.ok) {
@@ -136,11 +138,19 @@ export default function Contact() {
                     Something went wrong. Please try again later.
                   </Alert>
                 )}
+                <Box sx={{ mt: 3 }}>
+                  <Turnstile
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                    onSuccess={setTurnstileToken}
+                    onExpire={() => setTurnstileToken(null)}
+                  />
+                </Box>
                 <Button
                   type="submit"
                   variant="contained"
                   size="large"
-                  sx={{ mt: 3 }}
+                  disabled={!turnstileToken}
+                  sx={{ mt: 2 }}
                 >
                   Send Message
                 </Button>
