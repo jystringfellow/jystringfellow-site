@@ -14,15 +14,13 @@ import { useThemeContext } from './ThemeProvider';
 
 export default function Header() {
   const { mode, toggleTheme } = useThemeContext();
-  const logoSrc =
-    mode === 'dark' ? '/logo-512x512.svg' : '/logo-light-512x512.svg';
+  const logoSrc = '/logo-512x512.svg';
 
   return (
     <AppBar position="sticky" elevation={0}>
       <Toolbar>
         <Box component={Link} href="/" sx={{ display: 'inline-flex', alignItems: 'center', mr: 4 }}>
           <Image
-            key={logoSrc}
             src={logoSrc}
             alt="JYStringfellow"
             width={80}
