@@ -14,10 +14,15 @@ export default function Footer() {
         py: 3,
         px: 2,
         mt: 'auto',
+        borderTop: '1px solid',
+        borderColor: (theme) =>
+          theme.palette.mode === 'light'
+            ? 'rgba(11, 16, 32, 0.08)'
+            : 'rgba(87, 243, 51, 0.2)',
         backgroundColor: (theme) =>
           theme.palette.mode === 'light'
-            ? theme.palette.grey[200]
-            : theme.palette.grey[800],
+            ? 'rgba(255, 255, 255, 0.9)'
+            : 'rgba(7, 10, 18, 0.88)',
       }}
     >
       <Container maxWidth="lg">
@@ -33,7 +38,7 @@ export default function Footer() {
           sx={{ mt: 1 }}
         >
           <Link
-            color="inherit"
+            color="primary"
             href="https://github.com/jystringfellow"
             target="_blank"
             rel="noopener"

@@ -178,7 +178,7 @@ export default function Contact() {
                     variant="body1"
                     component="a"
                     href={`mailto:${EMAIL}`}
-                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                    sx={{ color: 'primary.main', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
                   >
                     {EMAIL}
                   </Typography>
@@ -199,7 +199,7 @@ export default function Contact() {
                     href={GITHUB_URL}
                     target="_blank"
                     rel="noopener"
-                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                    sx={{ color: 'primary.main', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
                   >
                     GitHub
                   </Typography>
@@ -220,7 +220,7 @@ export default function Contact() {
                     href={LINKEDIN_URL}
                     target="_blank"
                     rel="noopener"
-                    sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                    sx={{ color: 'primary.main', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
                   >
                     LinkedIn
                   </Typography>

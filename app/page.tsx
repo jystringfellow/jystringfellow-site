@@ -10,11 +10,25 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
+  const lockupSrc = '/lockup-1600x725.svg';
+
   return (
     <Container maxWidth="lg">
       <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <Box sx={{ mb: 2 }}>
+          <Image
+            key={lockupSrc}
+            src={lockupSrc}
+            alt="JYStringfellow"
+            width={520}
+            height={220}
+            priority
+            style={{ width: 'min(100%, 520px)', height: 'auto' }}
+          />
+        </Box>
         <Typography variant="h2" component="h1" gutterBottom>
           Welcome to My Site
         </Typography>

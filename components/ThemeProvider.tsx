@@ -22,7 +22,23 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') {
+      return 'dark';
+    }
+
+    const storedMode = window.localStorage.getItem('theme-mode');
+    if (storedMode === 'light' || storedMode === 'dark') {
+      return storedMode;
+    }
+
+    return 'dark';
+  });
+
+  React.useEffect(() => {
+    window.localStorage.setItem('theme-mode', mode);
+    document.documentElement.style.colorScheme = mode;
+  }, [mode]);
 
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
