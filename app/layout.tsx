@@ -8,6 +8,11 @@ import Box from '@mui/material/Box';
 export const metadata: Metadata = {
   title: 'Jacob Stringfellow',
   description: 'Personal website of Jacob Stringfellow',
+  icons: {
+    icon: '/logo-32x32.svg',
+    shortcut: '/logo-32x32.svg',
+    apple: '/logo-512x512.svg',
+  },
 };
 
 export default function RootLayout({
