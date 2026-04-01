@@ -13,19 +13,19 @@ import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
 
 const skills = [
+  'C# / .NET',
   'TypeScript',
   'React',
   'Next.js',
   'GraphQL',
-  'Node.js',
   'AWS',
-  'Docker',
-  'Kubernetes',
   'CI/CD',
   'AI / LLM Tooling',
   'Micro-frontends',
   'GitHub Copilot',
   'Cursor',
+  'Docker',
+  'Kubernetes',
 ];
 
 export default function About() {
@@ -108,7 +108,7 @@ export default function About() {
                 Mindbody
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Software Engineer → Engineering Manager
+                Software Test Technician → Staff Software Engineer | Engineering Manager
                 <br />
                 2013–2025 &middot; 12 years
               </Typography>
@@ -127,9 +127,11 @@ export default function About() {
               I&apos;ve spent over a decade building software and leading
               engineering teams, with most of that time at Mindbody where I grew
               from a Software Test Technician all the way to Staff Software
-              Engineer and Engineering Manager. Along the way I worked across
-              the full product stack — from automated test infrastructure and
-              monolith migrations to micro-frontend architectures, cloud-native
+              Engineer and Engineering Manager. My foundation is C# and the
+              .NET ecosystem — it&apos;s the language and stack I&apos;ve worked
+              in most and am most comfortable with. Along the way I worked
+              across the full product stack — from automated test infrastructure
+              and monolith migrations to micro-frontend architectures, cloud-native
               deployments on AWS with Docker and Kubernetes, and GraphQL
               platform work.
             </Typography>
