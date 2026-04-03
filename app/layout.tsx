@@ -8,13 +8,15 @@ import Footer from '@/components/Footer';
 import Box from '@mui/material/Box';
 
 // Runs synchronously before paint via next/script strategy="beforeInteractive".
-// Handles the legacy case: users who have a localStorage preference but no
-// cookie yet (first visit after deploy). Also stamps colorScheme early so
-// UA-rendered controls (scrollbars, form elements) match before hydration.
-// NOTE: This script is a safety net only. For cookie-carrying requests the
-// server already passes the correct initialMode to ThemeProvider, so the
-// server-rendered MUI HTML and client hydration agree without a flash.
-const themeInitScript = `(function(){try{var c=document.cookie.split('; ').find(function(r){return r.startsWith('theme-mode=')});var m=c?decodeURIComponent(c.split('=')[1]):null;if(m!=='light'&&m!=='dark'){try{m=window.localStorage.getItem('theme-mode')}catch(e){}}if(m==='light'||m==='dark'){document.documentElement.setAttribute('data-theme-mode',m);document.documentElement.style.colorScheme=m}}catch(e){}})();`;
+// For cookie-carrying requests the server already set the correct colorScheme
+// on <html>, so this script is a no-op in that case.
+// Safety net for legacy localStorage-only users (no cookie yet): stamps
+// colorScheme so UA-rendered controls match before paint, and backfills the
+// cookie so the *next* request can server-render the correct theme.
+// IMPORTANT: This script must NOT mutate data-theme-mode, because hydration
+// reads initialMode from the prop—not the attribute—so changing the attribute
+// pre-hydration would not avoid a mismatch but would cause one.
+const themeInitScript = `(function(){try{var c=document.cookie.split('; ').find(function(r){return r.startsWith('theme-mode=')});var m=c?decodeURIComponent(c.split('=')[1]):null;if(m==='light'||m==='dark'){document.documentElement.style.colorScheme=m;return}try{m=window.localStorage.getItem('theme-mode')}catch(e){}if(m==='light'||m==='dark'){document.documentElement.style.colorScheme=m;document.cookie='theme-mode='+encodeURIComponent(m)+'; path=/; max-age=31536000; SameSite=Lax'}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: 'Jacob Stringfellow',
@@ -25,11 +27,6 @@ export const metadata: Metadata = {
     apple: '/logo-512x512.svg',
   },
 };
-
-// This layout is intentionally dynamic: reading the theme cookie server-side
-// ensures the server-rendered MUI HTML matches the user's saved preference,
-// preventing hydration mismatches on every request.
-export const dynamic = 'force-dynamic';
 
 export default function RootLayout({
   children,

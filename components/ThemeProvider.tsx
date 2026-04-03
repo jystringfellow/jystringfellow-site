@@ -24,19 +24,11 @@ export default function ThemeProvider({
   children: React.ReactNode;
   initialMode?: 'light' | 'dark';
 }) {
-  const [mode, setMode] = useState<'light' | 'dark'>(() => {
-    // Server: use the value derived from the request cookie.
-    if (typeof window === 'undefined') return initialMode;
-
-    // Client: prefer the data-theme-mode attribute, which is set by both the
-    // server render and the beforeInteractive script (localStorage fallback).
-    // This keeps the client initial state consistent with whatever is already
-    // painted, avoiding a double-render on first mount.
-    const attrMode = document.documentElement.getAttribute('data-theme-mode');
-    if (attrMode === 'light' || attrMode === 'dark') return attrMode;
-
-    return initialMode;
-  });
+  // Always initialize from initialMode so the client's first render matches
+  // the server-rendered HTML (which was also built from initialMode). The
+  // beforeInteractive script must NOT change data-theme-mode pre-hydration,
+  // so reading the attribute here would risk divergence.
+  const [mode, setMode] = useState<'light' | 'dark'>(initialMode);
 
   React.useEffect(() => {
     try {
