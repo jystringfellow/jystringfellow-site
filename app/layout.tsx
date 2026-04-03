@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ThemeProvider from '@/components/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Box from '@mui/material/Box';
+
+// Runs synchronously before paint — reads cookie (with localStorage fallback)
+// and stamps data-theme-mode on <html> so ThemeProvider hydrates correctly
+// without making the root layout dynamic.
+const themeInitScript = `(function(){try{var c=document.cookie.split('; ').find(function(r){return r.startsWith('theme-mode=')});var m=c?decodeURIComponent(c.split('=')[1]):null;if(m!=='light'&&m!=='dark'){try{m=window.localStorage.getItem('theme-mode')}catch(e){}}if(m==='light'||m==='dark'){document.documentElement.setAttribute('data-theme-mode',m)}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: 'Jacob Stringfellow',
@@ -21,16 +25,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  const themeCookie = cookieStore.get('theme-mode')?.value;
-  const initialMode: 'light' | 'dark' =
-    themeCookie === 'light' ? 'light' : 'dark';
-
   return (
     <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body style={{ margin: 0 }}>
         <AppRouterCacheProvider>
-          <ThemeProvider initialMode={initialMode}>
+          <ThemeProvider>
             <Box
               sx={{
                 display: 'flex',

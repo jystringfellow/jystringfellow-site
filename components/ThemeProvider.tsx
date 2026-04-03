@@ -19,16 +19,37 @@ export const useThemeContext = () => useContext(ThemeContext);
 
 export default function ThemeProvider({
   children,
-  initialMode = 'dark',
 }: {
   children: React.ReactNode;
-  initialMode?: 'light' | 'dark';
 }) {
-  const [mode, setMode] = useState<'light' | 'dark'>(initialMode);
+  const [mode, setMode] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'dark';
+
+    // Prefer the value stamped by the inline script (sourced from cookie),
+    // then fall back to localStorage, then default to dark.
+    const attrMode = document.documentElement.getAttribute('data-theme-mode');
+    if (attrMode === 'light' || attrMode === 'dark') return attrMode;
+
+    try {
+      const stored = window.localStorage.getItem('theme-mode');
+      if (stored === 'light' || stored === 'dark') return stored;
+    } catch {
+      // Ignore storage read failures.
+    }
+
+    return 'dark';
+  });
 
   React.useEffect(() => {
-    window.localStorage.setItem('theme-mode', mode);
-    document.cookie = `theme-mode=${mode}; path=/; max-age=31536000; SameSite=Lax`;
+    try {
+      window.localStorage.setItem('theme-mode', mode);
+    } catch {
+      // Ignore storage write failures so theme updates still apply.
+    }
+    const encodedMode = encodeURIComponent(mode);
+    const secureAttr = window.location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `theme-mode=${encodedMode}; path=/; max-age=31536000; SameSite=Lax${secureAttr}`;
+    document.documentElement.setAttribute('data-theme-mode', mode);
     document.documentElement.style.colorScheme = mode;
   }, [mode]);
 
