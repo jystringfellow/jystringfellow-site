@@ -19,25 +19,23 @@ export const useThemeContext = () => useContext(ThemeContext);
 
 export default function ThemeProvider({
   children,
+  initialMode = 'dark',
 }: {
   children: React.ReactNode;
+  initialMode?: 'light' | 'dark';
 }) {
   const [mode, setMode] = useState<'light' | 'dark'>(() => {
-    if (typeof window === 'undefined') return 'dark';
+    // Server: use the value derived from the request cookie.
+    if (typeof window === 'undefined') return initialMode;
 
-    // Prefer the value stamped by the inline script (sourced from cookie),
-    // then fall back to localStorage, then default to dark.
+    // Client: prefer the data-theme-mode attribute, which is set by both the
+    // server render and the beforeInteractive script (localStorage fallback).
+    // This keeps the client initial state consistent with whatever is already
+    // painted, avoiding a double-render on first mount.
     const attrMode = document.documentElement.getAttribute('data-theme-mode');
     if (attrMode === 'light' || attrMode === 'dark') return attrMode;
 
-    try {
-      const stored = window.localStorage.getItem('theme-mode');
-      if (stored === 'light' || stored === 'dark') return stored;
-    } catch {
-      // Ignore storage read failures.
-    }
-
-    return 'dark';
+    return initialMode;
   });
 
   React.useEffect(() => {
