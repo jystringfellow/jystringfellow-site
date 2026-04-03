@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 // IMPORTANT: This script must NOT mutate data-theme-mode, because hydration
 // reads initialMode from the prop—not the attribute—so changing the attribute
 // pre-hydration would not avoid a mismatch but would cause one.
-const themeInitScript = `(function(){try{var c=document.cookie.split('; ').find(function(r){return r.startsWith('theme-mode=')});var m=c?decodeURIComponent(c.split('=')[1]):null;if(m==='light'||m==='dark'){document.documentElement.style.colorScheme=m;return}try{m=window.localStorage.getItem('theme-mode')}catch(e){}if(m==='light'||m==='dark'){document.documentElement.style.colorScheme=m;document.cookie='theme-mode='+encodeURIComponent(m)+'; path=/; max-age=31536000; SameSite=Lax'}}catch(e){}})();`;
+const themeInitScript = `(function(){try{var c=document.cookie.split(';').map(function(r){return r.trim()}).find(function(r){return r.startsWith('theme-mode=')});var m=c?decodeURIComponent(c.split('=')[1]):null;if(m==='light'||m==='dark'){document.documentElement.style.colorScheme=m;return}try{m=window.localStorage.getItem('theme-mode')}catch(e){}if(m==='light'||m==='dark'){document.documentElement.style.colorScheme=m;document.cookie='theme-mode='+encodeURIComponent(m)+'; path=/; max-age=31536000; SameSite=Lax'+(location.protocol==='https:'?'; Secure':'')}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: 'Jacob Stringfellow',

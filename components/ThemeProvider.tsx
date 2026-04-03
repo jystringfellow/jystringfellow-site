@@ -31,6 +31,27 @@ export default function ThemeProvider({
   const [mode, setMode] = useState<'light' | 'dark'>(initialMode);
 
   React.useEffect(() => {
+    const hasThemeCookie = document.cookie
+      .split(';')
+      .map((part) => part.trim())
+      .some((part) => part.startsWith('theme-mode='));
+
+    if (hasThemeCookie) return;
+
+    try {
+      const storedMode = window.localStorage.getItem('theme-mode');
+      if (
+        (storedMode === 'light' || storedMode === 'dark') &&
+        storedMode !== mode
+      ) {
+        setMode(storedMode);
+      }
+    } catch {
+      // Ignore storage read failures.
+    }
+  }, []);
+
+  React.useEffect(() => {
     try {
       window.localStorage.setItem('theme-mode', mode);
     } catch {
