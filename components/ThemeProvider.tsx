@@ -19,24 +19,16 @@ export const useThemeContext = () => useContext(ThemeContext);
 
 export default function ThemeProvider({
   children,
+  initialMode = 'dark',
 }: {
   children: React.ReactNode;
+  initialMode?: 'light' | 'dark';
 }) {
-  const [mode, setMode] = useState<'light' | 'dark'>(() => {
-    if (typeof window === 'undefined') {
-      return 'dark';
-    }
-
-    const storedMode = window.localStorage.getItem('theme-mode');
-    if (storedMode === 'light' || storedMode === 'dark') {
-      return storedMode;
-    }
-
-    return 'dark';
-  });
+  const [mode, setMode] = useState<'light' | 'dark'>(initialMode);
 
   React.useEffect(() => {
     window.localStorage.setItem('theme-mode', mode);
+    document.cookie = `theme-mode=${mode}; path=/; max-age=31536000; SameSite=Lax`;
     document.documentElement.style.colorScheme = mode;
   }, [mode]);
 

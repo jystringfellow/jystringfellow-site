@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ThemeProvider from '@/components/ThemeProvider';
 import Header from '@/components/Header';
@@ -20,11 +21,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = cookies();
+  const themeCookie = cookieStore.get('theme-mode')?.value;
+  const initialMode: 'light' | 'dark' =
+    themeCookie === 'light' ? 'light' : 'dark';
+
   return (
     <html lang="en">
       <body style={{ margin: 0 }}>
         <AppRouterCacheProvider>
-          <ThemeProvider>
+          <ThemeProvider initialMode={initialMode}>
             <Box
               sx={{
                 display: 'flex',
