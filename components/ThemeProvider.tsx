@@ -29,29 +29,37 @@ export default function ThemeProvider({
   // beforeInteractive script must NOT change data-theme-mode pre-hydration,
   // so reading the attribute here would risk divergence.
   const [mode, setMode] = useState<'light' | 'dark'>(initialMode);
+  const [isModeResolved, setIsModeResolved] = useState(false);
 
   React.useEffect(() => {
+    let resolvedMode: 'light' | 'dark' = initialMode;
+
     const hasThemeCookie = document.cookie
       .split(';')
       .map((part) => part.trim())
       .some((part) => part.startsWith('theme-mode='));
 
-    if (hasThemeCookie) return;
-
-    try {
-      const storedMode = window.localStorage.getItem('theme-mode');
-      if (
-        (storedMode === 'light' || storedMode === 'dark') &&
-        storedMode !== mode
-      ) {
-        setMode(storedMode);
+    if (!hasThemeCookie) {
+      try {
+        const storedMode = window.localStorage.getItem('theme-mode');
+        if (storedMode === 'light' || storedMode === 'dark') {
+          resolvedMode = storedMode;
+        }
+      } catch {
+        // Ignore storage read failures.
       }
-    } catch {
-      // Ignore storage read failures.
     }
+
+    if (resolvedMode !== initialMode) {
+      setMode(resolvedMode);
+    }
+
+    setIsModeResolved(true);
   }, []);
 
   React.useEffect(() => {
+    if (!isModeResolved) return;
+
     try {
       window.localStorage.setItem('theme-mode', mode);
     } catch {
@@ -62,7 +70,7 @@ export default function ThemeProvider({
     document.cookie = `theme-mode=${encodedMode}; path=/; max-age=31536000; SameSite=Lax${secureAttr}`;
     document.documentElement.setAttribute('data-theme-mode', mode);
     document.documentElement.style.colorScheme = mode;
-  }, [mode]);
+  }, [mode, isModeResolved]);
 
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
