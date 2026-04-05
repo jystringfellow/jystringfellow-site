@@ -34,12 +34,16 @@ export default function ThemeProvider({
   React.useEffect(() => {
     let resolvedMode: 'light' | 'dark' = initialMode;
 
-    const hasThemeCookie = document.cookie
+    const cookieMode = document.cookie
       .split(';')
       .map((part) => part.trim())
-      .some((part) => part.startsWith('theme-mode='));
+      .find((part) => part.startsWith('theme-mode='))
+      ?.split('=')[1];
 
-    if (!hasThemeCookie) {
+    const decodedCookieMode = cookieMode ? decodeURIComponent(cookieMode) : null;
+    if (decodedCookieMode === 'light' || decodedCookieMode === 'dark') {
+      resolvedMode = decodedCookieMode;
+    } else {
       try {
         const storedMode = window.localStorage.getItem('theme-mode');
         if (storedMode === 'light' || storedMode === 'dark') {

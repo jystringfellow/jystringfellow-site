@@ -53,7 +53,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
         <AppRouterCacheProvider>
-          <ThemeProvider initialMode={initialMode}>
+          <ThemeProvider key={initialMode} initialMode={initialMode}>
             <Box
               sx={{
                 display: 'flex',
