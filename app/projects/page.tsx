@@ -79,13 +79,25 @@ function DemoSelectorCard({
   return (
     <Card
       variant="outlined"
+      component="button"
+      type="button"
       onClick={onClick}
+      aria-pressed={active}
       sx={{
         cursor: 'pointer',
         position: 'relative',
         overflow: 'hidden',
         borderColor,
+        width: '100%',
+        p: 0,
+        textAlign: 'inherit',
+        background: 'transparent',
         transition: 'transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease',
+        '&:focus-visible': {
+          outline: '2px solid',
+          outlineColor: 'primary.main',
+          outlineOffset: 2,
+        },
         '&::before': {
           content: '""',
           position: 'absolute',

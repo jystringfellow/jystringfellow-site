@@ -59,7 +59,7 @@ export default function ThemeProvider({
     }
 
     setIsModeResolved(true);
-  }, []);
+  }, [initialMode]);
 
   React.useEffect(() => {
     if (!isModeResolved) return;
