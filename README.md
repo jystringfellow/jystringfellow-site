@@ -23,7 +23,7 @@ A modern, responsive personal website built with Next.js 14, TypeScript, and Mat
 
 ### Prerequisites
 
-- Node.js 18.x or higher
+- Node.js 24.x
 - pnpm
 
 ### Installation
@@ -45,6 +45,8 @@ pnpm install
 
 ```
 RESEND_API_KEY=your_resend_api_key
+TURNSTILE_SECRET_KEY=your_turnstile_secret_key
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=your_turnstile_site_key
 ```
 
 4. Run the development server:
@@ -61,6 +63,7 @@ pnpm dev
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
 - `pnpm lint` - Run ESLint
+- `pnpm test` - Run the contact route test suite
 - `pnpm format` - Format code with Prettier
 
 ## Deployment
@@ -69,11 +72,13 @@ This site is deployed on [Vercel](https://vercel.com). Every push to `main` trig
 
 ### Environment Variables
 
-Add the following environment variable in your Vercel project settings:
+Add the following environment variables in your Vercel project settings:
 
 | Variable | Description |
 |---|---|
 | `RESEND_API_KEY` | API key from [resend.com](https://resend.com) for contact form emails |
+| `TURNSTILE_SECRET_KEY` | Secret key for server-side verification from [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Public site key used to render the Turnstile widget in the contact form |
 
 ## Project Structure
 
@@ -131,6 +136,7 @@ export const lightTheme = createTheme({
 - **Styling**: Emotion (CSS-in-JS)
 - **Icons**: Material UI Icons
 - **Email**: Resend
+- **Bot Protection**: Cloudflare Turnstile
 - **Linting**: ESLint
 - **Formatting**: Prettier
 
