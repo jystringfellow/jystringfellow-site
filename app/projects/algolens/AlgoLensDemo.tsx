@@ -28,6 +28,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import AlgoLensWorkspace from './AlgoLensWorkspace';
 import {
   AlgorithmId,
   Difficulty,
@@ -76,14 +77,6 @@ type ProblemTestCase = {
   expected: unknown;
 };
 
-type TestResult = {
-  description: string;
-  passed: boolean;
-  actual: string;
-  expected: string;
-  error?: string;
-};
-
 type TestsStatus = 'idle' | 'generating' | 'ready' | 'running' | 'error';
 type HintStatus = 'idle' | 'generating' | 'error';
 type AnswerStatus = 'idle' | 'generating' | 'error';
@@ -98,14 +91,6 @@ function formatValue(value: unknown) {
   } catch {
     return String(value);
   }
-}
-
-function valuesEqual(left: unknown, right: unknown) {
-  if (Object.is(left, right)) {
-    return true;
-  }
-
-  return formatValue(left) === formatValue(right);
 }
 
 function inferFunctionName(starterCode: string) {
@@ -265,7 +250,7 @@ function parseJsonArrayPayload(text: string) {
       }))
       .filter(
         (item) =>
-          item.args.every((arg) => arg !== undefined) &&
+          item.args.every((arg: unknown) => arg !== undefined) &&
           item.expected !== undefined
       );
   } catch {
@@ -297,7 +282,7 @@ function parseLooseArrayPayload(text: string) {
       }))
       .filter(
         (item) =>
-          item.args.every((arg) => arg !== undefined) &&
+          item.args.every((arg: unknown) => arg !== undefined) &&
           item.expected !== undefined
       );
   } catch {
@@ -570,9 +555,7 @@ export default function AlgoLensDemo() {
     'Waiting for model load.',
   ]);
   const [solutionCode, setSolutionCode] = React.useState('');
-  const [functionName, setFunctionName] = React.useState('');
   const [testCases, setTestCases] = React.useState<ProblemTestCase[]>([]);
-  const [testResults, setTestResults] = React.useState<TestResult[]>([]);
   const [testsStatus, setTestsStatus] = React.useState<TestsStatus>('idle');
   const [testsError, setTestsError] = React.useState('');
   const [testGenerationAttempt, setTestGenerationAttempt] = React.useState(0);
@@ -635,9 +618,7 @@ export default function AlgoLensDemo() {
   React.useEffect(() => {
     if (!problem) {
       setSolutionCode('');
-      setFunctionName('');
       setTestCases([]);
-      setTestResults([]);
       setTestsError('');
       setTestsStatus('idle');
       setHintStatus('idle');
@@ -650,8 +631,6 @@ export default function AlgoLensDemo() {
 
     const inferredTests = inferTestsFromExamples(problem.examples);
     setSolutionCode(problem.starterCode);
-    setFunctionName(inferFunctionName(problem.starterCode));
-    setTestResults([]);
     setHintStatus('idle');
     setAnswerStatus('idle');
     setAnswerText('');
@@ -1037,78 +1016,6 @@ Do not include explanations.`,
       setGenerateStatus('error');
       setError(message);
       appendLog(`Generation failed: ${message}`);
-    }
-  };
-
-  const runTests = () => {
-    if (!problem) {
-      return;
-    }
-
-    if (testCases.length === 0) {
-      setTestsError(
-        'No runnable tests are available yet. Retry test generation or generate a new problem.'
-      );
-      setTestsStatus('error');
-      return;
-    }
-
-    const executableCode = sanitizeRunnableCode(solutionCode);
-    const trimmedName = (functionName.trim() || inferFunctionName(executableCode)).trim();
-    if (!/^[A-Za-z_$][\w$]*$/.test(trimmedName)) {
-      setTestsError('Enter a valid JavaScript function name before running tests.');
-      setTestsStatus('error');
-      return;
-    }
-
-    setTestsError('');
-    setTestsStatus('running');
-
-    try {
-      const fn = new Function(
-        `${executableCode}\n;return typeof ${trimmedName} !== 'undefined' ? ${trimmedName} : undefined;`
-      )();
-
-      if (typeof fn !== 'function') {
-        throw new Error(
-          `Function "${trimmedName}" was not found. Update the function name or starter code.`
-        );
-      }
-
-      const results = testCases.map((testCase) => {
-        try {
-          const actual = fn(...testCase.args);
-          const passed = valuesEqual(actual, testCase.expected);
-          return {
-            description: testCase.description,
-            passed,
-            actual: formatValue(actual),
-            expected: formatValue(testCase.expected),
-          };
-        } catch (caught) {
-          const message =
-            caught instanceof Error ? caught.message : 'Runtime error';
-          return {
-            description: testCase.description,
-            passed: false,
-            actual: 'runtime-error',
-            expected: formatValue(testCase.expected),
-            error: message,
-          };
-        }
-      });
-
-      setTestResults(results);
-      setTestsStatus('ready');
-      appendLog(
-        `Ran ${results.length} tests (${results.filter((result) => result.passed).length} passed).`
-      );
-    } catch (caught) {
-      const message =
-        caught instanceof Error ? caught.message : 'Unable to run tests.';
-      setTestsStatus('error');
-      setTestsError(message);
-      appendLog(`Test run failed: ${message}`);
     }
   };
 
@@ -1792,120 +1699,14 @@ complete JavaScript function implementation (no markdown fences)`,
                 </Stack>
 
                 <Stack spacing={1.5}>
-                    <TextField
-                      label="Function name to test"
-                      value={functionName}
-                      onChange={(event) => setFunctionName(event.target.value)}
-                      size="small"
+                    <AlgoLensWorkspace
+                      starterCode={solutionCode}
+                      initialFunctionName={inferFunctionName(solutionCode)}
+                      testsStatus={testsStatus}
+                      testsError={testsError}
+                      testCases={testCases}
+                      onRetryTests={retryTests}
                     />
-
-                    <TextField
-                      label="Solution code"
-                      multiline
-                      minRows={12}
-                      value={solutionCode}
-                      onChange={(event) => setSolutionCode(event.target.value)}
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                          fontSize: 13,
-                          lineHeight: 1.55,
-                        },
-                      }}
-                    />
-
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                      <Button
-                        variant="contained"
-                        onClick={runTests}
-                        disabled={testsStatus === 'running' || testsStatus === 'generating'}
-                      >
-                        {testsStatus === 'running' ? 'Running tests...' : 'Run tests'}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        onClick={() => {
-                          setSolutionCode(problem.starterCode);
-                          setFunctionName(inferFunctionName(problem.starterCode));
-                          setTestResults([]);
-                        }}
-                      >
-                        Reset code
-                      </Button>
-                    </Stack>
-
-                    {testsStatus === 'generating' && (
-                      <Typography variant="body2" color="text.secondary">
-                        Building runnable tests from the generated problem...
-                      </Typography>
-                    )}
-
-                    {testsStatus === 'error' && (
-                      <Stack spacing={1}>
-                        <Typography variant="body2" color="warning.main">
-                          {testsError || 'Test generation failed for this problem.'}
-                        </Typography>
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          onClick={retryTests}
-                          disabled={testsStatus === 'generating'}
-                          sx={{ alignSelf: 'flex-start' }}
-                        >
-                          Retry tests only
-                        </Button>
-                      </Stack>
-                    )}
-
-                    {testCases.length > 0 && (
-                      <Stack spacing={0.75}>
-                        <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                          Test cases
-                        </Typography>
-                        {testCases.map((testCase, index) => (
-                          <Typography
-                            key={`${testCase.description}-${index}`}
-                            variant="caption"
-                            color="text.secondary"
-                          >
-                            {testCase.description}: args={formatValue(testCase.args)} expected={formatValue(testCase.expected)}
-                          </Typography>
-                        ))}
-                      </Stack>
-                    )}
-
-                    {testResults.length > 0 && (
-                      <Stack spacing={0.75}>
-                        <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                          Results
-                        </Typography>
-                        {testResults.map((result, index) => (
-                          <Paper
-                            key={`${result.description}-${index}`}
-                            variant="outlined"
-                            sx={{
-                              p: 1,
-                              borderColor: result.passed ? 'success.main' : 'warning.main',
-                            }}
-                          >
-                            <Typography variant="caption" sx={{ fontWeight: 700 }}>
-                              {result.passed ? 'PASS' : 'FAIL'} - {result.description}
-                            </Typography>
-                            <Typography variant="caption" display="block" color="text.secondary">
-                              expected: {result.expected}
-                            </Typography>
-                            <Typography variant="caption" display="block" color="text.secondary">
-                              actual: {result.actual}
-                            </Typography>
-                            {result.error && (
-                              <Typography variant="caption" display="block" color="warning.main">
-                                error: {result.error}
-                              </Typography>
-                            )}
-                          </Paper>
-                        ))}
-                      </Stack>
-                    )}
                   </Stack>
               </CardContent>
             </Card>
