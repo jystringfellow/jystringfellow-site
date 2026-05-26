@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -19,47 +20,56 @@ const fractileVideos = [
   {
     file: 'fractile-install.mp4',
     label: 'Installation',
-    description: 'A quick walkthrough of installing FracTile and getting your first layout ready.',
+    description:
+      'A quick walkthrough of installing FracTile and getting your first layout ready.',
   },
   {
     file: 'fractile-open-at-login.mp4',
     label: 'Open at Login',
-    description: 'Configure FracTile to launch automatically so your workspace setup is always ready.',
+    description:
+      'Configure FracTile to launch automatically so your workspace setup is always ready.',
   },
   {
     file: 'fractile-add-grid-layout.mp4',
     label: 'Add Grid Layout',
-    description: 'Build a clean, column-based layout for repeatable window organization.',
+    description:
+      'Build a clean, column-based layout for repeatable window organization.',
   },
   {
     file: 'fractile-add-canvas-layout.mp4',
     label: 'Add Canvas Layout',
-    description: 'Create custom freeform zones when your workflow needs more flexibility than a grid.',
+    description:
+      'Create custom freeform zones when your workflow needs more flexibility than a grid.',
   },
   {
     file: 'fractile-edit-layouts.mp4',
     label: 'Edit Layouts',
-    description: 'Update existing layouts to better match changing apps, monitors, and habits.',
+    description:
+      'Update existing layouts to better match changing apps, monitors, and habits.',
   },
   {
     file: 'fractile-delete-layout.mp4',
     label: 'Delete Layout',
-    description: 'Clean up old layouts to keep the layout picker focused and fast.',
+    description:
+      'Clean up old layouts to keep the layout picker focused and fast.',
   },
   {
     file: 'fractile-zone-snapping.mp4',
     label: 'Zone Snapping',
-    description: 'Drag windows into highlighted zones to snap precisely where you want them.',
+    description:
+      'Drag windows into highlighted zones to snap precisely where you want them.',
   },
   {
     file: 'fractile-multi-zone-snap.mp4',
     label: 'Multi-Zone Snap',
-    description: 'Span a single window across multiple zones for larger work surfaces.',
+    description:
+      'Span a single window across multiple zones for larger work surfaces.',
   },
   {
     file: 'fractile-factory-reset.mp4',
     label: 'Factory Reset',
-    description: 'Reset FracTile back to defaults when you want to start fresh.',
+    description:
+      'Reset FracTile back to defaults when you want to start fresh.',
   },
 ];
 
@@ -92,7 +102,8 @@ function DemoSelectorCard({
         p: 0,
         textAlign: 'inherit',
         background: 'transparent',
-        transition: 'transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease',
+        transition:
+          'transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease',
         '&:focus-visible': {
           outline: '2px solid',
           outlineColor: 'primary.main',
@@ -125,7 +136,11 @@ function DemoSelectorCard({
       }}
     >
       <CardContent sx={{ py: 1.75 }}>
-        <Typography variant="subtitle2" align="center" sx={{ fontWeight: active ? 700 : 600 }}>
+        <Typography
+          variant="subtitle2"
+          align="center"
+          sx={{ fontWeight: active ? 700 : 600 }}
+        >
           {label}
         </Typography>
       </CardContent>
@@ -135,7 +150,9 @@ function DemoSelectorCard({
 
 export default function Projects() {
   const [featuredDemo, setFeaturedDemo] = useState(fractileVideos[0]);
-  const [selectorMaxHeight, setSelectorMaxHeight] = useState<number | null>(null);
+  const [selectorMaxHeight, setSelectorMaxHeight] = useState<number | null>(
+    null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const featuredPanelRef = useRef<HTMLDivElement | null>(null);
 
@@ -167,7 +184,12 @@ export default function Projects() {
 
       <Box sx={{ mb: 8 }}>
         <Box sx={{ mb: 3 }}>
-          <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1 }}>
+          <Stack
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            sx={{ mb: 1 }}
+          >
             <Box
               sx={{
                 width: { xs: 48, sm: 56, md: 64 },
@@ -192,12 +214,19 @@ export default function Projects() {
             </Typography>
           </Stack>
           <Typography variant="body1" color="text.secondary" paragraph>
-            A macOS menu-bar utility for arranging windows into customizable zone layouts.
-            FracTile provides a lightweight FancyZones-like workflow - create grid or canvas
-            layouts, preview them with overlays, and snap windows into zones using drag-snapping
-            or keyboard modifiers.
+            A macOS menu-bar utility for arranging windows into customizable
+            zone layouts. FracTile provides a lightweight FancyZones-like
+            workflow - create grid or canvas layouts, preview them with
+            overlays, and snap windows into zones using drag-snapping or
+            keyboard modifiers.
           </Typography>
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            flexWrap="wrap"
+            useFlexGap
+            sx={{ mb: 2 }}
+          >
             {['SwiftUI', 'AppKit', 'macOS', 'Swift'].map((tech) => (
               <Chip key={tech} label={tech} size="small" />
             ))}
@@ -261,13 +290,19 @@ export default function Projects() {
                 sx={{
                   fontWeight: 600,
                   color: (theme) =>
-                    theme.palette.mode === 'dark' ? 'primary.main' : 'secondary.main',
+                    theme.palette.mode === 'dark'
+                      ? 'primary.main'
+                      : 'secondary.main',
                 }}
               >
                 {featuredDemo.label}
               </Typography>
             </Stack>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ mt: 0.25 }}
+            >
               {featuredDemo.description}
             </Typography>
           </Grid>
@@ -278,7 +313,10 @@ export default function Projects() {
             </Typography>
             <Box
               sx={{
-                maxHeight: { xs: 'none', md: selectorMaxHeight ? `${selectorMaxHeight}px` : 'none' },
+                maxHeight: {
+                  xs: 'none',
+                  md: selectorMaxHeight ? `${selectorMaxHeight}px` : 'none',
+                },
                 overflowY: { xs: 'visible', md: 'auto' },
                 pr: { xs: 0, md: 0.5 },
               }}
@@ -289,16 +327,126 @@ export default function Projects() {
                     <DemoSelectorCard
                       label={label}
                       active={featuredDemo.file === file}
-                      onClick={() => setFeaturedDemo({ file, label, description })}
+                      onClick={() =>
+                        setFeaturedDemo({ file, label, description })
+                      }
                     />
                   </Grid>
                 ))}
               </Grid>
             </Box>
 
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ mt: 1, display: 'block' }}
+            >
               Scroll for more demos.
             </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Box sx={{ mb: 8 }}>
+        <Divider sx={{ mb: 4 }} />
+
+        <Grid container spacing={3.5} alignItems="center">
+          <Grid item xs={12} md={7}>
+            <Stack
+              direction="row"
+              spacing={1.5}
+              alignItems="center"
+              sx={{ mb: 1 }}
+            >
+              <Box
+                sx={{
+                  width: { xs: 48, sm: 56, md: 64 },
+                  height: { xs: 48, sm: 56, md: 64 },
+                  borderRadius: 2,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  display: 'grid',
+                  placeItems: 'center',
+                  background: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? 'linear-gradient(135deg, rgba(87, 243, 51, 0.14), rgba(184, 109, 255, 0.14))'
+                      : 'linear-gradient(135deg, rgba(99, 65, 226, 0.12), rgba(76, 195, 35, 0.12))',
+                }}
+              >
+                <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
+                  AL
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="h3" component="h2">
+                  AlgoLens
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Browser-only WebLLM algorithm tutor
+                </Typography>
+              </Box>
+            </Stack>
+
+            <Typography variant="body1" color="text.secondary" paragraph>
+              AlgoLens turns canonical algorithm challenges into personalized
+              problems about topics someone actually cares about. The current
+              MVP uses WebLLM for on-device generation, so it is static-hosting
+              safe with no backend, secrets, or paid API calls.
+            </Typography>
+
+            <Stack
+              direction="row"
+              spacing={1}
+              flexWrap="wrap"
+              useFlexGap
+              sx={{ mb: 2 }}
+            >
+              {['Next.js', 'TypeScript', 'WebLLM', 'Static Safe'].map(
+                (tech) => (
+                  <Chip key={tech} label={tech} size="small" />
+                )
+              )}
+            </Stack>
+
+            <Button
+              variant="outlined"
+              size="small"
+              component={Link}
+              href="/projects/algolens"
+            >
+              Try AlgoLens
+            </Button>
+          </Grid>
+
+          <Grid item xs={12} md={5}>
+            <Card
+              variant="outlined"
+              sx={{
+                borderRadius: 3,
+                overflow: 'hidden',
+                background: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? 'linear-gradient(180deg, rgba(16, 22, 38, 0.98), rgba(7, 10, 18, 0.98))'
+                    : 'linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 245, 251, 0.98))',
+              }}
+            >
+              <CardContent sx={{ p: 2.5 }}>
+                <Stack spacing={1.5}>
+                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    <Chip label="music" color="primary" size="small" />
+                    <Chip label="Two Sum" size="small" />
+                    <Chip label="Beginner" size="small" />
+                  </Stack>
+                  <Typography variant="h6">
+                    Generate a fresh music-flavored DP challenge.
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    runs locally: WebGPU model load, JSON problem output, no API
+                    key
+                  </Typography>
+                </Stack>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </Box>
@@ -308,7 +456,12 @@ export default function Projects() {
           <Divider sx={{ mb: 4 }} />
 
           <Box sx={{ mb: 3 }}>
-            <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1 }}>
+            <Stack
+              direction="row"
+              spacing={1.5}
+              alignItems="center"
+              sx={{ mb: 1 }}
+            >
               <Box
                 sx={{
                   width: { xs: 48, sm: 56, md: 64 },
@@ -331,17 +484,25 @@ export default function Projects() {
                   Next Project (Preview)
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Placeholder block to preview page layout with multiple projects.
+                  Placeholder block to preview page layout with multiple
+                  projects.
                 </Typography>
               </Box>
             </Stack>
 
             <Typography variant="body1" color="text.secondary" paragraph>
-              This is a visual stand-in so you can evaluate how spacing and visual weight feel once
-              another project is added. Swap this content with your actual project details when ready.
+              This is a visual stand-in so you can evaluate how spacing and
+              visual weight feel once another project is added. Swap this
+              content with your actual project details when ready.
             </Typography>
 
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 2 }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              flexWrap="wrap"
+              useFlexGap
+              sx={{ mb: 2 }}
+            >
               {['TypeScript', 'Next.js', 'UI/UX', 'Coming Soon'].map((tech) => (
                 <Chip key={tech} label={tech} size="small" />
               ))}
@@ -371,13 +532,20 @@ export default function Projects() {
                   },
                 }}
               >
-                <CardContent sx={{ height: '100%', display: 'flex', alignItems: 'flex-end' }}>
+                <CardContent
+                  sx={{
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                  }}
+                >
                   <Box>
                     <Typography variant="h6" sx={{ mb: 0.5 }}>
                       Project Preview Area
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Reserve this spot for a hero screenshot, short demo reel, or interactive preview.
+                      Reserve this spot for a hero screenshot, short demo reel,
+                      or interactive preview.
                     </Typography>
                   </Box>
                 </CardContent>
@@ -398,7 +566,11 @@ export default function Projects() {
                   <Grid item xs={12} sm={6} md={12} key={item}>
                     <Card variant="outlined" sx={{ borderColor: 'divider' }}>
                       <CardContent sx={{ py: 1.75 }}>
-                        <Typography variant="subtitle2" align="center" sx={{ fontWeight: 600 }}>
+                        <Typography
+                          variant="subtitle2"
+                          align="center"
+                          sx={{ fontWeight: 600 }}
+                        >
                           {item}
                         </Typography>
                       </CardContent>
@@ -411,7 +583,12 @@ export default function Projects() {
         </Box>
       )}
 
-      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} maxWidth="lg" fullWidth>
+      <Dialog
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        maxWidth="lg"
+        fullWidth
+      >
         <DialogContent sx={{ p: { xs: 1, sm: 2 } }}>
           <Box
             component="video"
